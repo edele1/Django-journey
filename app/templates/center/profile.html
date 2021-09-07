@@ -1,0 +1,35 @@
+{% extends 'center/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h3>个人信息</h3>
+<br/>
+<table cellspacing="3">
+	<tr style="height:40px;">
+		<td width="100">用户名：</td>
+		<td>{{user.name}}</td>
+	</tr>
+  
+  	<tr style="height:40px;">
+		<td>密码：</td>
+		<td>******&nbsp;&nbsp;<a class="link" href="/center/editPass/">[修改]</a></td>
+	</tr>
+	
+	<tr style="height:40px;">
+		<td>邮件：</td>
+		<td>{{user.email}}</td>
+	</tr>
+
+	<tr style="height:40px;">
+		<td>性别：</td>
+		<td>{{user.get_sex_display}}</td>
+	</tr>
+	
+	<tr style="height:40px;">
+		<td>创建时间：</td>
+		<td>{{user.crt_time}}</td>
+	</tr>
+	
+</table>
+		
+{% endblock %}

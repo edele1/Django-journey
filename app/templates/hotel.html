@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<form  action="/hotel/search/" method="get">
+						<p style="text-align:center;">
+							酒店：<input type="type" name="key" placeholder="输入关键字" style="padding:6px;width:240px;" value="{{key}}"/>
+							&nbsp;&nbsp;<input type="submit" value="检索"  style="padding:5px;width:60px;">
+						</p>
+				</form>
+			</div>
+			
+			{% for hotel in hotels %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<table>
+					<tr>
+						<td rowspan="2" width="135"><img src="/static/img/tu2.png" width="120"/></td>
+						<td ><a href="/hotel/detail/{{hotel.id}}"><h3>{{hotel.name}}</h3></a></td>
+					</tr>
+					<tr>
+						<td>
+							<p>城市：{{hotel.city}}&nbsp;&nbsp;&nbsp;&nbsp;地址：{{hotel.address}}</p>
+							<p>{{hotel.desc|slice:":200" }}...</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			{% endfor %}
+			<div class="pagination"  style="padding:20px;text-align:center;">
+			<span class="step-links">
+				{% if hotels.has_previous %}
+					<a href="?key={{key}}&page={{ hotels.previous_page_number }}">上页</a>
+				{% endif %}
+
+				<span class="current">
+					&nbsp;&nbsp;页码 {{ hotels.number }} / {{ hotels.paginator.num_pages }}&nbsp;&nbsp;
+				</span>
+
+				{% if hotels.has_next %}
+					<a href="?key={{key}}&page={{ hotels.next_page_number }}">下页</a>
+				{% endif %}
+			</span>
+			</div>
+{% endblock %}

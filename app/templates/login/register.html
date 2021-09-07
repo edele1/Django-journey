@@ -1,0 +1,94 @@
+{#login/templates/login/register.html#}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+	<link href="/static/css/style.css" rel="stylesheet">
+<script type="text/javascript">
+
+ function save(){
+	
+	 var name = document.getElementById("username").value;
+	 var passwor1 = document.getElementById("password1").value;
+	 var passwor2 = document.getElementById("password2").value;
+	 var email = document.getElementById("email").value;
+	 
+	 if(name == ''){
+		alert("用户名为空");
+		return false;
+	 }
+	 
+	 if(passwor1 == ''){
+		alert("密码为空");
+		return false;
+	}
+	
+	if(passwor2 == ''){
+		alert("确认密码为空");
+		return false;
+	}
+	 var re = /^[A-Za-z0-9._%-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,4}$/;
+	 if (!re.test(email)){
+		alert("邮件格式不正确");
+		return false;
+	 }
+
+	 var form = document.getElementById("form1");
+	 form.submit();
+	 
+ }
+</script>
+</head>
+<body>
+     <div style="margin: 5% 30%;padding:30px;border: 1px solid #bcbcbc;">
+		<p style="border-bottom: 1px solid #020F69;font-size:32px;font-weight:bolder">欢迎注册</p>
+		<br/>
+		{% if message %}
+			<div style="color:red">{{ message }}</div>
+        {% endif %}
+
+       <form action="/register/" method="post" id="form1">
+	   {% csrf_token %}
+	   <table cellspacing="3">
+            <tr style="height:40px;">
+                <td style="width:120px;">用户名：</td>
+                <td><input type="text" id="username" name="username" placeholder="用户名" autofocus required style="padding:6px;width:200px;"/></td>
+            </tr>
+          
+            <tr style="height:40px;">
+                <td style="width:120px;">密码：</td>
+                <td><input type="password" id="password1" placeholder="密码" name="password1" required style="padding:6px;width:200px;"></td>
+            </tr>
+			
+			<tr style="height:40px;">
+                <td style="width:120px;">确认密码：</td>
+                <td><input type="password" id="password2" placeholder="确认密码" name="password2" required style="padding:6px;width:200px;"></td>
+            </tr>
+			
+			<tr style="height:40px;">
+                <td style="width:120px;">性别：</td>
+                <td>
+					<input name="sex" type="radio" value="1" checked="checked"/>男  
+					<input name="sex" type="radio" value="0" >女
+				</td>
+            </tr>
+			
+			<tr style="height:40px;">
+                <td style="width:120px;">邮件：</td>
+                <td><input type="text" id="email" name="email" placeholder="邮件" autofocus required style="padding:6px;width:200px;"></td>
+            </tr>
+			
+            <tr style="text-align:center;height:50px;">
+				<td colspan="2"><input type="button" onclick="save()"  value="注册" style="padding:6px;width:100px"/> </td>
+			</tr>
+		</table>
+		<br/>
+		<p style="text-align:center;">- <a href="/">返回景点</a> &nbsp;|&nbsp; <a href="/login">登录</a> -</p>
+		<br/>
+        </form>
+    </div>
+ 
+</body>
+</html>

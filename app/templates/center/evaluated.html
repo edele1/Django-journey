@@ -1,0 +1,23 @@
+{% extends 'center/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h3>评价过的景点</h3>
+<br/>
+<table class="gridtable" style="width:100%">
+	<tr>
+		<th>分类</th>
+		<th>景点名称</th>
+		<th>评价</th>
+		<th>创建时间</th>
+	</tr>
+	{% for comm in comms %}
+	<tr>
+		<td align="center">{{comm.product.category.name}}</td>
+		<td align="center">{{comm.product.name}}</td>
+		<td align="center">{{comm.get_point_display}}</td>
+		<td align="center">{{comm.crt_time}}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;">
+				<h3>{{hotel.name}}</h3>
+				<p>所在城市：{{hotel.city}}&nbsp;&nbsp;地址：{{hotel.address}}</p>
+				<p>{{hotel.desc}}</p>
+				<p>房间：</p>
+				<table class="gridtable" style="width:100%">
+				<tr>
+					<th>类型</th>
+					<th>是否含早</th>
+					<th>价格</th>
+					<th>简介</th>
+					<th>数量</th>
+				</tr>
+				{% for room in rooms %}
+				<tr>
+					<td align="center">{{room.get_roomType_display}}</td>
+					<td align="center">{{room.get_breakfast_display}}</td>
+					<td align="center">{{room.price}}</td>
+					<td>{{room.desc}}</td>
+					<td>{{room.num}}</td>
+				</tr>
+				{% endfor %}
+				</table>
+				<br/>
+				
+				{% if request.session.is_login %}
+				<h4>房间预定</h4>
+				<form method="post" id="form1">
+				{% csrf_token %}
+					<p>房间类型：
+						<select id="roomId" name="roomId" ><option value="">请选择</option>
+							{% for room in rooms %}
+							<option value="{{room.id}}">{{room.get_roomType_display}}</option>
+							{% endfor %}
+						</select>
+					</p>
+					<p>预定日期：
+						<input id="orderDate" name="orderDate" type="text" value=""/>
+					</p>
+					<p>房间数量：
+						<input id="orderNum" name="orderNum" type="text" value=""/>
+					</p>
+					<p>
+						<input type="hidden" name="hotelId" value = "{{hotel.id}}" />
+						<input type="hidden" name="userId" value = "{{ request.session.user_id }}" />
+					</p>
+					<p><input type="button" onclick="save()" value="提交" style="padding:5px;width:120px;"></p>
+				</form>
+				{% else %}
+					<p>想预定的话，请先<a href="/login/">[登录]</a>。</p>
+				{% endif %}
+			</div>
+<script>
+
+	// 保存评论
+	function save(){
+		 var roomId=$("#roomId").val();
+		 if(roomId ==null || roomId ==''){
+			alert("请选择房间类型");
+			return false;
+		 }
+	 
+	 	 var orderDate=$("#orderDate").val();
+		 if(orderDate ==null || orderDate ==''){
+			alert("请输入日期");
+			return false;
+		 }
+	 
+		 var orderNum=$("#orderNum").val();
+		 if(orderNum ==null || orderNum ==''){
+			alert("请输入数量");
+			return false;
+		 }
+		 
+		$.post("/hotel/saveOrder/",
+				$("#form1").serialize(),function(data){
+				alert("提交成功");
+				window.location.reload();
+		});
+
+	}
+	
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{config.site}}</title>
+	<link href="/static/css/style.css" rel="stylesheet">
+	<script src="/static/js/jquery.min.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+	<div id="top">
+		<div id="top_links">
+			{% if request.session.is_login %}
+			  <a href="/center/">当前在线：{{ request.session.user_name }}</a>
+			  &nbsp;&nbsp;
+			  <a href="/logout/">退出</a>
+		   {% else %}
+			  <a href="/login/">登录</a>
+			  &nbsp;&nbsp;
+			  <a href="/register/">注册</a>
+		   {% endif %}
+		</div>
+	</div>
+	<div id="head" style="">
+		<div style="width:1020px;margin: 0 auto;text-align:left;height:80px;">
+			<div style="float:left;width:680px;padding-top:15px;">
+				<a href="/"><p style="color:#000000;font-size:28px;">{{config.site}}</p></a>
+				<p style="color:#000000;font-size:16px;padding-top:15px;">{{config.desc}}</p>
+			</div>
+			<div style="float:right;width:300px;padding-top:20px;">
+				<img src="/static/img/tu1.png" width="300"/>
+			</div>
+		</div>
+	</div>
+
+	<div id="main">
+
+		<div id="center_left">
+			<h3>菜单</h3>
+			<ul class="menu">
+				<li><a href="/center/index">会员中心</a></li>
+				<li><a href="/center/profile">个人信息</a></li>
+				<li><a href="/center/evaluated">评价过的景点</a></li>
+				<li><a href="/center/orderList">宾馆预约一览</a></li>
+			</ul>
+		</div>
+		<div id="center_right">
+			{% block content %}{% endblock %}
+		</div>
+		<div style="clear:both"></div>
+	</div>
+	<div id="foot">
+		<p style="color:#ffffff;padding-top:20px;">python web作业-用Django做的旅游景点网站&nbsp;&nbsp;2021年1月12日</p>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<form  action="/product/search/" method="get">
+						<p style="text-align:center;">
+							旅游景点：<input type="type" name="key" placeholder="输入关键字" style="padding:6px;width:240px;" />
+							&nbsp;&nbsp;<input type="submit" value="检索"  style="padding:5px;width:60px;">
+						</p>
+				</form>
+			</div>
+			
+			<div style="clear:both"><br/></div>
+			<h3>最新景点</h3>
+			{% for product in products %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;width:220px;height:300px;float:left;">
+				<a href="/product/detail/{{product.id}}"><img src="/media/{{product.headImg}}" width="200" height="150"/></a>
+				<a href="/product/detail/{{product.id}}"><h4>{{product.name|slice:":16" }}</h4></a>
+				<p>分类：{{product.category.name}}&nbsp;&nbsp;</p>
+				<p>门票：<span style="color:#FF5E5A">{{product.price}}</span>元/人&nbsp;&nbsp;</p>
+				<p>开放时间：{{product.openTime}}</p>
+			</div>
+			{% endfor %}
+			
+			<div style="clear:both"><br/></div>
+			<h3>旅游咨询</h3>
+			{% for note in notes %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<a href="/note/detail/{{note.id}}"><h4>{{note.title}}</h4></a>
+				<p>{{note.content|slice:":100" }}...</p>
+			</div>
+			{% endfor %}
+
+{% endblock %}

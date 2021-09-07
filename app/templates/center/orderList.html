@@ -1,0 +1,44 @@
+{% extends 'center/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h3>宾馆预约一览</h3>
+<br/>
+<table class="gridtable" style="width:100%">
+	<tr>
+		<th>宾馆</th>
+		<th>房间类型</th>
+		<th>价格</th>
+		<th>预定数量</th>
+		<th>创建时间</th>
+		<th>操作</th>
+	</tr>
+	{% for order in orders %}
+	<tr>
+		<td align="center">{{order.hotel.name}}</td>
+		<td align="center">{{order.room.get_roomType_display}}</td>
+		<td align="center">{{order.room.price}}</td>
+		<td align="center">{{order.num}}</td>
+		<td align="center">{{order.crt_time}}</td>
+		<td align="center">
+			<a href="/hotel/detail/{{order.hotel_id}}/" target="_blank" >[查看宾馆]</a>&nbsp;&nbsp;
+			<a href="javascript:void(0)" onclick="delOrder({{order.id}})">[删除]</a>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+	<script>
+	// 删除
+    function delOrder(id) {
+        $.get("/center/delOrder/"+ id +"/", { },
+       	 function (jd) {
+            if (jd.result == 'success' ) {
+            	alert("删除成功！");
+				window.location.reload();
+            } else {
+				alert("删除失败！");
+            }
+        }, 'json');
+    }
+	</script>
+{% endblock %}

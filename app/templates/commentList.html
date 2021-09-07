@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<h3>评价一览（{{comment_count}}）</h3>
+			</div>
+			{% for comment in comments %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<table width="100%">
+					<tr>
+						<td rowspan="2" width="15%" align="center">
+						<img src="/static/img/user.png" width="50" height="50" /><br/>
+						{{comment.user.name}}
+						</td>
+						<td width="60%">评价：{{comment.get_point_display}}</td>
+						<td width="25%">{{comment.crt_time}}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="padding:5px;">{{comment.content}}</td>
+					</tr>
+				</table>
+			</div>
+			{% endfor %}
+			<div class="pagination"  style="padding:20px;text-align:center;">
+			<span class="step-links">
+				{% if comments.has_previous %}
+					<a href="?page={{ comments.previous_page_number }}">上页</a>
+				{% endif %}
+
+				<span class="current">
+					&nbsp;&nbsp;页码 {{ comments.number }} / {{ comments.paginator.num_pages }}&nbsp;&nbsp;
+				</span>
+
+				{% if comments.has_next %}
+					<a href="?page={{ comments.next_page_number }}">下页</a>
+				{% endif %}
+			</span>
+			</div>
+{% endblock %}

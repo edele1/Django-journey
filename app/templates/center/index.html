@@ -1,0 +1,12 @@
+{% extends 'center/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h3>会员中心</h3>
+<br/>
+
+<p>欢迎{{user.name}}登录会员中心</p>
+
+<p>最近登录时间：{{user.last_time}}，如果不是本人登录，请<a class="link" href="/center/editPass/">[修改]</a>密码</p>
+
+{% endblock %}

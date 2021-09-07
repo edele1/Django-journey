@@ -1,0 +1,25 @@
+{#login/templates/login/index.html#}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+	<link href="/static/css/style.css" rel="stylesheet">
+	<style>
+
+	</style>
+</head>
+<body>
+     <div style="margin: 10% 30%;padding:30px;">
+        <p style="border-bottom: 1px solid #c00;font-size:32px;font-weight:bolder">欢迎登录</p>
+		<br/>
+		{% if message %}
+			<p style="color:red">{{ message }}</p>
+        {% endif %}
+		<br/><br/>
+	    <p style="text-align:center;">- <a href="/">返回景点</a> &nbsp;|&nbsp; <a href="/login/">登录</a> -</p>
+    </div>
+
+</body>
+</html>

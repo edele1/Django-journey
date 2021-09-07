@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<form  action="/note/search/" method="get">
+						<p style="text-align:center;">
+							<input type="type" name="key" placeholder="输入关键字" style="padding:6px;width:240px;" value="{{key}}"/>
+							&nbsp;&nbsp;<input type="submit" value="检索"  style="padding:5px;width:60px;">
+						</p>
+				</form>
+			</div>
+			
+			{% for note in notes %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<a href="/note/detail/{{note.id}}"><h4>{{note.title}}</h4></a>
+				<p>{{note.content|slice:":100" }}......</p>
+			</div>
+			{% endfor %}
+			<div class="pagination"  style="padding:20px;text-align:center;">
+			<span class="step-links">
+				{% if notes.has_previous %}
+					<a href="?key={{key}}&page={{ notes.previous_page_number }}">上页</a>
+				{% endif %}
+
+				<span class="current">
+					&nbsp;&nbsp;页码 {{ notes.number }} / {{ notes.paginator.num_pages }}&nbsp;&nbsp;
+				</span>
+
+				{% if notes.has_next %}
+					<a href="?key={{key}}&page={{ notes.next_page_number }}">下页</a>
+				{% endif %}
+			</span>
+			</div>
+{% endblock %}

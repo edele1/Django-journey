@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+				<img src="/media/{{product.headImg}}" width="400"/>
+				<h3><a href="/product/detail/{{product.id}}"></a>{{product.name}}</h3>
+				<p>分类：{{product.category.name}}&nbsp;&nbsp;门票：<span style="color:#FF5E5A">{{product.price}}</span>元/人 &nbsp;&nbsp;开放时间：{{product.openTime}}</p>
+				<p>{{product.content|linebreaks}}</p>
+			</div>
+			<div style="padding:10px;border-bottom: 1px solid #cccccc;">
+			<p><a class="link" href="/product/commentList/{{product.id}}/">查看所有评价（{{comment_count}}）</a></p>
+			{% if request.session.is_login %}
+			<form method="post" id="form1">
+			{% csrf_token %}
+			<p>评价：
+					<input id="p5" name="point" type="radio" value="5" checked="checked"/><label for="p5">五星好评 </label>
+					<input id="p4" name="point" type="radio" value="4" ><label for="p4">四星好评</label>
+					<input id="p3" name="point" type="radio" value="3" ><label for="p3">三星好评</label>
+					<input id="p2" name="point" type="radio" value="2" ><label for="p2">二星好评</label>
+					<input id="p1" name="point" type="radio" value="1" ><label for="p1">一星好评</label>
+				</p>
+				<p>
+					<textarea name="content" id="content" rows="8" cols="80"></textarea>
+					<input type="hidden" name="productId" value = "{{product.id}}" />
+					<input type="hidden" name="userId" value = "{{ request.session.user_id }}" />
+				</p>
+				<p><input type="button" onclick="save()" value="提交" style="padding:5px;width:120px;"></p>
+			</form>
+			{% else %}
+					想评价的话，请先<a href="/login/">登录</a>。
+		    {% endif %}
+			</div>
+<script>
+
+	// 保存评论
+	function save(){
+		 var content=$("#content").val();
+		 if(content ==null || content ==''){
+			alert("请输入内容");
+			return false;
+		 }
+	 
+		$.post("/product/saveComment/",
+				$("#form1").serialize(),function(data){
+				alert("提交成功");
+				window.location.reload();
+		});
+
+	}
+	
+</script>
+{% endblock %}

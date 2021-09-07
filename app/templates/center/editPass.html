@@ -1,0 +1,53 @@
+{% extends 'center/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<h3>密码修改</h3>
+<br/>
+<table cellspacing="3">
+    <form action="/center/editPass/" id="form1" method="post" >
+	{% csrf_token %}
+  	<tr style="height:40px;">
+		<td>密码：</td>
+		<td><input type="password" id="password1" placeholder="密码" name="password1" style="padding:6px;"></td>
+	</tr>
+	
+  	<tr style="height:40px;">
+		<td>确认密码：</td>
+		<td><input type="password" id="password2" placeholder="密码" name="password2" style="padding:6px;"></td>
+	</tr>
+	
+	<tr style="text-align:center;height:50px;">
+		<td colspan="2"><input type="button" value="保存" onclick="save()" style="padding:6px;width:100px"/> </td>
+	</tr>
+	</form>
+</table>
+
+<script type="text/javascript">
+
+ function save(){
+	
+	 var password1 = $("#password1").val();
+	 var password2 = $("#password2").val();
+	
+	 if(password1 == '' || password2 == '' ){
+		alert("请输入密码");
+		return false;
+	 }
+	 
+	 if( password1.length < 6  ||  password2.length < 6 ){
+		alert("密码必须超过6位");
+		return false;
+	 }
+	 
+	 if(password1 != password2 ){
+		alert("确认密码与密码不符合");
+		return false;
+	 }
+	 
+	 $("#form1").submit();
+ }
+
+</script>
+		
+{% endblock %}
